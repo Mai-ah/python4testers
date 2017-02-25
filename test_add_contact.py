@@ -127,7 +127,7 @@ class test_add_contact(unittest.TestCase):
         wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
 
     def open_home_page(self, wd):
-        wd.get("http://localhost/addressbook/addressbook/")
+        wd.get("http://localhost/addressbook/")
 
     def tearDown(self):
         self.wd.quit()
