@@ -4,8 +4,11 @@ class ContactHelper:
         self.app = app
 
     def create(self, contact):
+        wd = self.app.wd
         self.add_new_contact_form()
         self.fill_out_form(contact)
+        # submit confirmation
+        wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
     def fill_out_form(self, contact):
         wd = self.app.wd
@@ -88,8 +91,6 @@ class ContactHelper:
         wd.find_element_by_name("notes").click()
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(contact.notes)
-        # submit confirmation
-        wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
     def add_new_contact_form(self):
         wd = self.app.wd
@@ -104,7 +105,7 @@ class ContactHelper:
         self.open_home_page()
         # select the first contact
         wd.find_element_by_name("selected[]").click()
-        # submit delation
+        # submit del
         wd.find_element_by_xpath(u"//input[@value='Usuń']").click()
         wd.switch_to_alert().accept()
 
