@@ -38,3 +38,4 @@ class GroupHelper:
         # submit delation
         wd.find_element_by_name("delete").click()
         self.return_to_group_page()
+

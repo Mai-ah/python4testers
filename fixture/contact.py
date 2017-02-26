@@ -91,3 +91,20 @@ class ContactHelper:
     def add_new_contact_form(self):
         wd = self.app.wd
         wd.find_element_by_link_text("nowy wpis").click()
+
+    def open_home_page(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("strona główna").click()
+
+    def del_first(self):
+        wd = self.app.wd
+        self.open_home_page()
+        # select the first group
+        wd.find_element_by_name("selected[]").click()
+        # submit delation
+        wd.find_element_by_xpath(u"//input[@value='Usuń']").click()
+        wd.switch_to_alert().accept()
+
+
+
+
