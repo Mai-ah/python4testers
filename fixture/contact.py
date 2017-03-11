@@ -98,7 +98,8 @@ class ContactHelper:
 
     def open_home_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("strona główna").click()
+        if not (len(wd.find_elements_by_link_text("Nazwisko")) > 0):
+            wd.find_element_by_link_text("strona główna").click()
 
     def del_first(self):
         wd = self.app.wd
