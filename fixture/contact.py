@@ -106,10 +106,13 @@ class ContactHelper:
             wd.find_element_by_link_text("strona główna").click()
 
     def del_first(self):
+        self.del_contact_by_index(0)
+
+    def del_contact_by_index(self, index):
         wd = self.app.wd
         self.open_home_page()
         # select the first contact
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
         # submit del
         wd.find_element_by_xpath(u"//input[@value='Usuń']").click()
         wd.switch_to_alert().accept()
