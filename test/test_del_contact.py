@@ -12,8 +12,8 @@ def test_dell_first_contact(app):
                                anniversary_y="2020", alt_address="Adres2", alt_phone="66554433", notes="uwagi"))
     old_contacts = app.contact.get_contact_list()
     app.contact.del_first()
+    assert len(old_contacts) - 1 == app.contact.count()
     new_contacts = app.contact.get_contact_list()
-    assert len(old_contacts) - 1 == len(new_contacts)
     old_contacts[0:1] = []
     assert old_contacts == new_contacts
 

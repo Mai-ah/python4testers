@@ -12,6 +12,7 @@ class ContactHelper:
         self.fill_out_form(contact)
         # submit confirmation
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.contact_cache = None
 
     def fill_out_form(self, contact):
         wd = self.app.wd
@@ -112,25 +113,30 @@ class ContactHelper:
         # submit del
         wd.find_element_by_xpath(u"//input[@value='Usuń']").click()
         wd.switch_to_alert().accept()
+        self.contact_cache = None
 
     def modify(self, contact):
         wd = self.app.wd
         self.open_home_page()
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         self.fill_out_form(contact)
+        self.contact_cache = None
 
     def count(self):
         wd = self.app.wd
         self.open_home_page()
         return len(wd.find_elements_by_name("selected[]"))
 
+    contact_cache = None
+
     def get_contact_list(self):
-        wd = self.app.wd
-        self.open_home_page()
-        contacts = []
-        for element in wd.find_elements_by_name("entry"):
-            name = element.find_element_by_css_selector("tr>td:nth-child(3)").text
-            lname = element.find_element_by_css_selector("tr>td:nth-child(2)").text
-            id = element.find_element_by_name("selected[]").get_attribute('value')
-            contacts.append(Contact(id=id, firstname=name, lastname=lname))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_home_page()
+            self.contact_cache = []
+            for element in wd.find_elements_by_name("entry"):
+                name = element.find_element_by_css_selector("tr>td:nth-child(3)").text
+                lname = element.find_element_by_css_selector("tr>td:nth-child(2)").text
+                id = element.find_element_by_name("selected[]").get_attribute('value')
+                self.contact_cache.append(Contact(id=id, firstname=name, lastname=lname))
+        return list(self.contact_cache)
