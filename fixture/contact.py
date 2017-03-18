@@ -118,10 +118,13 @@ class ContactHelper:
         wd.switch_to_alert().accept()
         self.contact_cache = None
 
-    def modify(self, contact):
+    def modify_first(self):
+        self.modify_contact_by_index(0)
+
+    def modify_contact_by_index(self, contact, index):
         wd = self.app.wd
         self.open_home_page()
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+        wd.find_elements_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")[index].click()
         self.fill_out_form(contact)
         self.contact_cache = None
 
