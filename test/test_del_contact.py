@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
 
+
 def test_dell_first_contact(app):
     if app.contact.count() == 0:
         app.contact.create(Contact(firstname="Anna", middlename="Katarzyna", lastname="Góra", nickname="Lalala",
@@ -9,8 +10,12 @@ def test_dell_first_contact(app):
                                email1="milena.zahorska@gmail.com", email2="mail2@exsample.com",
                                email3="mail3@exsample.com", homepage="www.wp.pl", birthday_y="1985",
                                anniversary_y="2020", alt_address="Adres2", alt_phone="66554433", notes="uwagi"))
+    old_contacts = app.contact.get_contact_list()
     app.contact.del_first()
-
+    new_contacts = app.contact.get_contact_list()
+    assert len(old_contacts) - 1 == len(new_contacts)
+    old_contacts[0:1] = []
+    assert old_contacts == new_contacts
 
 
 
