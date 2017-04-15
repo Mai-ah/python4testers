@@ -11,7 +11,7 @@ def random_string(prefix, maxlen):
 
 testdata = [
     Contact(firstname=firstname, middlename=middlename, lastname=lastname, nickname=nickname, title=title,
-            company=company, address=address, homephone=homephone, mobilphone=mobilphone, workphone=workphone, fax=fax,
+            company=company, address=address, homephone=homephone, mobilephone=mobilephone, workphone=workphone, fax=fax,
             email1=email1, email2=email2, email3=email3, homepage=homepage, birthday_y=birthday_y,
             anniversary_y=anniversary_y, alt_address=alt_address, alt_phone=alt_phone, notes=notes)
     for firstname in ["", random_string ("firstname", 15)]
@@ -22,7 +22,7 @@ testdata = [
     for company in ["", random_string ("company", 20)]
     for address in ["", random_string ("address", 10)]
     for homephone in ["", random_string ("homephone", 10)]
-    for mobilphone in ["", random_string ("mobilphone", 10)]
+    for mobilephone in ["", random_string ("mobilephone", 10)]
     for workphone in ["", random_string ("workphone", 10)]
     for fax in ["", random_string ("fax", 10)]
     for email1 in ["", random_string ("email1", 10)]
