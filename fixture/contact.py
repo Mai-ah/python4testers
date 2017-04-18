@@ -15,7 +15,6 @@ class ContactHelper:
         self.contact_cache = None
 
     def fill_out_form(self, contact):
-        wd = self.app.wd
         self.name_section(contact)
         self.title_fields(contact)
         self.company_address(contact)
@@ -144,6 +143,19 @@ class ContactHelper:
         wd.switch_to_alert().accept()
         self.contact_cache = None
 
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.select_contact_by_id(id)
+        # submit deletion
+        wd.find_element_by_css_selector('[value="Delete"]').click()
+        wd.switch_to_alert().accept()
+        wd.find_element_by_css_selector('[href="./"]').click()
+        self.contact_cache = None
+
     def modify_first(self):
         self.modify_contact_by_index(0)
         self.contact_cache = None
@@ -175,7 +187,6 @@ class ContactHelper:
                                                   mobilephone=phones[1], workphone=phones[2], alt_phone=phones[3]))
         return list(self.contact_cache)
 
-
     def get_contact_info_from_edit_page(self, index):
         wd = self.app.wd
         self.open_contact_to_edit_by_index(index)
@@ -202,4 +213,24 @@ class ContactHelper:
         row = wd.find_elements_by_name("entry")[index]
         cell = row.find_elements_by_tag_name("td")[6]
         cell.find_element_by_tag_name("a").click()
+
+    def edit(self, contact):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+        wd.find_element_by_name("firstname").click()
+        wd.find_element_by_name("firstname").clear()
+        wd.find_element_by_name("firstname").send_keys(contact.firstname)
+        wd.find_element_by_name("middlename").click()
+        wd.find_element_by_name("middlename").clear()
+        wd.find_element_by_name("middlename").send_keys(contact.middlename)
+        wd.find_element_by_name("lastname").click()
+        wd.find_element_by_name("lastname").clear()
+        wd.find_element_by_name("lastname").send_keys(contact.lastname)
+        wd.find_element_by_name("nickname").click()
+        wd.find_element_by_name("nickname").clear()
+        wd.find_element_by_name("nickname").send_keys(contact.nickname)
+        wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+        wd.find_element_by_link_text("strona główna").click()
 
