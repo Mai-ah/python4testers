@@ -27,7 +27,7 @@ def app(request):
     web_config = load_config( request.config.getoption("--target"))["web"]
     if fixture is None or not fixture.is_valid():
         fixture = Application(browser=browser, base_url=web_config["baseUrl"])
-    fixture.session.ensure_log_in(username=web_config["username"], password=web_config["password"])
+    fixture.session.login(username=web_config["username"], password=web_config["password"])
     return fixture
 
 
@@ -48,6 +48,7 @@ def stop(request):
         fixture.session.logout()
         fixture.destroy()
     request.addfinalizer(fin)
+    return fixture
 
 
 @pytest.fixture

@@ -49,7 +49,7 @@ class GroupHelper:
         self.return_to_group_page()
         self.group_cache = None
 
-    def delete_group_by_id(self, id):
+    def del_group_by_id(self, id):
         wd = self.app.wd
         self.open_group_page()
         self.select_group_by_id(id)
